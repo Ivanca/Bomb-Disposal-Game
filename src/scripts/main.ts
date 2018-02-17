@@ -2,5 +2,6 @@
 import '../styles/app.scss';
 import GameManager from './GameManager';
 
-
-let gameManager:GameManager = new GameManager();
+document.addEventListener('DOMContentLoaded', () => {
+	let game:GameManager = new GameManager();
+});

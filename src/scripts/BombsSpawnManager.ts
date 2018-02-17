@@ -1,7 +1,7 @@
 
 export default class BombSpawnManager {
 	
-	constructor() {
+	constructor(gameContainer:HTMLDivElement) {
 		// code...
 	}
 }
