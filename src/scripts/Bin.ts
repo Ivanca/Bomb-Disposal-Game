@@ -18,7 +18,11 @@ export default class Bin {
 	}
 
 	colorChangeHandler():void {
-		this.color = Colors.getRandomColorHex();
+		let color = Colors.getRandomColorHex();
+		if (color === this.color) {
+			return this.colorChangeHandler();
+		}
+		this.color = color;
 		this.html.querySelector('svg').style.fill = this.color;
 	}
 
