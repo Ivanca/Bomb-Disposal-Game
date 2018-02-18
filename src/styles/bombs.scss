@@ -16,6 +16,17 @@ div.bombs-container {
 		font-size: 3vh;
 		color: white;
 		text-align: center;
+		svg {
+			max-width:100%;
+		}
+		.countdown {
+			display: block;
+			position: absolute;
+			height: 87%;
+			width: 72%;
+			bottom:0;
+			left:0;
+		}
 		&.draggable-source--is-dragging {
 			opacity: 0;
 		}
