@@ -5,6 +5,7 @@ export default class BinSpawnManager {
 	bins:Bin[];
 	binsContainer: HTMLDivElement;
 	swapColorCountdown: HTMLDivElement; 
+	setIntervalId: number;
 
 	constructor(gameContainer:HTMLDivElement) {
 		this.binsContainer = document.createElement('div');
@@ -21,7 +22,7 @@ export default class BinSpawnManager {
 	startCountdown() {
 		const delayInSeconds = 40;
 		let countDown = delayInSeconds;
-		setInterval(() => {
+		this.setIntervalId = setInterval(() => {
 			countDown--;
 			if (countDown === 0) {
 				this.bins.forEach((bin) => bin.colorChangeHandler());
@@ -29,6 +30,10 @@ export default class BinSpawnManager {
 			}
 			this.swapColorCountdown.innerHTML = countDown.toString();
 		}, 1000);
+	}
+
+	onGameOver() {
+		clearInterval(this.setIntervalId);
 	}
 
 }
