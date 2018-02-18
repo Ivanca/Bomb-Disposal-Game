@@ -16,6 +16,7 @@ div.bombs-container {
 		font-size: 3vh;
 		color: white;
 		text-align: center;
+		cursor: pointer;
 		svg {
 			max-width:100%;
 		}
@@ -23,6 +24,7 @@ div.bombs-container {
 			display: block;
 			position: absolute;
 			height: 87%;
+			pointer-events: none;
 			width: 72%;
 			bottom:0;
 			left:0;
