@@ -11,6 +11,8 @@ export default class Bomb {
 	constructor() {
 		this.html = document.createElement('div');
 		this.html.classList.add('bomb');
+		this.html.style.background = '#' + Colors.getRandomColorHex(true);
 		// code...
 	}
+
 }

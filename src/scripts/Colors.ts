@@ -12,12 +12,18 @@ class Colors {
 
 	static colorsHex:string[] = []
 	
-	public static getRandomColorHex():string {
-		if (this.colorsHex.length === 0) {
-			this.colorsHex = this.possibleColors();
+	public static getRandomColorHex(allowRepetition?:boolean):string {
+		if (allowRepetition) {
+			let colors = this.possibleColors();
+			let randomIndex:number = Math.floor(Math.random() * colors.length);
+			return colors[randomIndex];
+		} else {		
+			if (this.colorsHex.length === 0) {
+				this.colorsHex = this.possibleColors();
+			}
+			let randomIndex:number = Math.floor(Math.random() * this.colorsHex.length);
+			return this.colorsHex.splice(randomIndex, 1)[0];
 		}
-		let randomIndex:number = Math.floor(Math.random() * this.colorsHex.length);
-		return this.colorsHex.splice(randomIndex, 1)[0];
 	}
 }
 
