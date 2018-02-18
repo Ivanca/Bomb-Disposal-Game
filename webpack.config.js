@@ -22,7 +22,8 @@ module.exports = {
 
   plugins: [
       new CopyWebpackPlugin([
-          { from: 'src/images', to: 'images' }
+          { from: 'src/images', to: 'images' },
+          { from: 'src/fonts', to: 'fonts' }
       ])
   ],
 
@@ -48,7 +49,7 @@ module.exports = {
         use: [{
             loader: "style-loader" // creates style nodes from JS strings
         }, {
-            loader: "css-loader" // translates CSS into CommonJS
+            loader: "css-loader?-url" // translates CSS into CommonJS
         }, {
             loader: "sass-loader" // compiles Sass to CSS
         }]
