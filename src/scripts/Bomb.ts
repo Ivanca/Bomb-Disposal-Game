@@ -56,7 +56,7 @@ export default class Bomb {
 		clearInterval(this.explosionInterval);
 		this.enabled = false;
 		// making sure to delete any dragging clones as well
-		setTimeout(()=> $('.' + this.class).addClass('disabled').remove())
+		setTimeout(()=> $('.' + this.class).addClass('disabled'))
 	}
 
 }
