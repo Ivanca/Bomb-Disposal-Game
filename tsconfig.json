@@ -1,14 +1,19 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "allowJs": true,
         "noImplicitAny": true,
         "removeComments": true,
+        "skipLibCheck": true,
         "preserveConstEnums": true,
-        "sourceMap": true
+        "outDir": "./dist",
+        "module": "es6",
+        "target": "es6",
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true
     },
-    "compileOnSave": true,
+    "compileOnSave": false,
     "files": [
-        "./src/scripts/main.ts",
+        "./src/scripts/main.ts"
     ],
     "exclude": [
         "node_modules",
