@@ -76,9 +76,10 @@ export default class BombSpawnManager {
 		let left:number;
 		let top:number;
 		do {
-			left = Math.random()  * (containerBounds.width - bombPixelsWidth) + containerBounds.left;
+			left = Math.random() * (containerBounds.width - bombPixelsWidth) + containerBounds.left;
+			left = Math.max(left, 0);
 			top = Math.random() * (containerBounds.height - bombPixelsHeight) + containerBounds.top;
-			console.log(left, top);
+			top = Math.max(top, 0);
 		} while(document.elementFromPoint(left, top).matches('.bomb'));
 		return {left, top};
 	}
