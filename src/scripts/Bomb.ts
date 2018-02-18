@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 export default class Bomb {
 
-	public html: HTMLDivElement;
+	public $html: JQuery<HTMLElement>;
 	public enabled: boolean;
 	class: string;
 	explosionInterval: number;
@@ -13,16 +13,16 @@ export default class Bomb {
 		this.enabled = true;
 		// unique classname
 		this.class = 'bomb-' + Date.now();
-		this.html = document.createElement('div');
-		this.html.classList.add('bomb', this.class);
-		this.html.style.background = '#' + Colors.getRandomColorHex(true);
+		this.$html = $('<div>')
+			.addClass('bomb ' + this.class)
+			.css('background', '#' + Colors.getRandomColorHex(true))
 		this.handleExplosionTiming();
 	}
 
 	public onDropped(collided:HTMLElement) {
-		let initialBounds:ClientRect | DOMRect = this.html.getBoundingClientRect();
+		let initialBounds:ClientRect | DOMRect = this.$html[0].getBoundingClientRect();
 		if (collided.matches('.bin')) {			
-			if (this.html.style.background === collided.style.background) {
+			if (this.$html[0].style.background === collided.style.background) {
 				GameManager.addToScore(+1);
 			}  else {
 				GameManager.addToScore(-1);

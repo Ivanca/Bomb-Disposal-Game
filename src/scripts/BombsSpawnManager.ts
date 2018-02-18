@@ -52,14 +52,14 @@ export default class BombSpawnManager {
 	}
 
 	findBombByHTMLNode(node:HTMLElement):Bomb {
-		return this.allBombs.find((bomb)=> bomb.html === node);
+		return this.allBombs.find((bomb)=> bomb.$html[0] === node);
 	}
 
 	spawnBomb() {
 		let bomb = new Bomb();
 		let {top, left} = this.getRandomUnoccupiedPosition();
 
-		$(bomb.html).css({top, left}).appendTo(this.bombsContainer);
+		bomb.$html.css({top, left}).appendTo(this.bombsContainer);
 		this.allBombs.push(bomb);
 
 		if (Date.now() > this.spawningEndTime || this.allBombs.length > 120) {
