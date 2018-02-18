@@ -22,6 +22,7 @@ module.exports = {
 
   plugins: [
       new CopyWebpackPlugin([
+          { from: 'index.html' },
           { from: 'src/images', to: 'images' },
           { from: 'src/fonts', to: 'fonts' }
       ])

@@ -9,7 +9,7 @@ export default class Bomb {
 	public color: string;
 	class: string;
 	explosionInterval: number;
-	private svg:string = '<svg viewBox="0 0 97.324 97.324"><use xlink:href="dist/images/bomb.svg#bomb" /></svg>';
+	private svg:string = '<svg viewBox="0 0 97.324 97.324"><use xlink:href="images/bomb.svg#bomb" /></svg>';
 
 	constructor() {
 		this.enabled = true;
