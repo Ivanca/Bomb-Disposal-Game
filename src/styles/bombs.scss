@@ -3,14 +3,19 @@ div.bombs-container {
 	margin-left: 26vw;
 	margin-right: 26vw;
 	height: 70%;
+
 	div.bomb {
 		position: absolute;
 		height: 10vh;
 		width: 10vh;
 		margin-right: 10vh;
 		display: inline-block;
-		&.draggable--original {
-			opacity: 1;
+		border-radius: 50%;
+		&.draggable-source--is-dragging {
+			opacity: 0;
+		}
+		&.disabled {
+			display: none;
 		}
 	}
 }

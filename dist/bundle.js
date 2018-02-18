@@ -65,6 +65,50 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BombsSpawnManager__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BinsSpawnManager__ = __webpack_require__(12);
+
+
+var GameManager;
+(function (GameManager) {
+    let bombsSpawnManager;
+    let binsSpawnManager;
+    let bins;
+    let gameContainer;
+    let scoreElement;
+    let score = 0;
+    function initialSetup() {
+        gameContainer = document.querySelector('#game');
+        scoreElement = document.createElement('div');
+        scoreElement.classList.add('score');
+        gameContainer.appendChild(scoreElement);
+        bombsSpawnManager = new __WEBPACK_IMPORTED_MODULE_0__BombsSpawnManager__["a" /* default */](gameContainer);
+        binsSpawnManager = new __WEBPACK_IMPORTED_MODULE_1__BinsSpawnManager__["a" /* default */](gameContainer);
+        updateScoreHtml();
+    }
+    GameManager.initialSetup = initialSetup;
+    function gameOver() {
+        bombsSpawnManager.onGameOver();
+        binsSpawnManager.onGameOver();
+    }
+    GameManager.gameOver = gameOver;
+    function addToScore(num) {
+        score += num;
+        updateScoreHtml();
+    }
+    GameManager.addToScore = addToScore;
+    function updateScoreHtml() {
+        scoreElement.innerHTML = "Score: " + score;
+    }
+})(GameManager || (GameManager = {}));
+/* harmony default export */ __webpack_exports__["a"] = (GameManager);
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 /*
@@ -146,50 +190,6 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__BombsSpawnManager__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__BinsSpawnManager__ = __webpack_require__(12);
-
-
-var GameManager;
-(function (GameManager) {
-    let bombsSpawnManager;
-    let binsSpawnManager;
-    let bins;
-    let gameContainer;
-    let scoreElement;
-    let score = 0;
-    function initialSetup() {
-        gameContainer = document.querySelector('#game');
-        scoreElement = document.createElement('div');
-        scoreElement.classList.add('score');
-        gameContainer.appendChild(scoreElement);
-        bombsSpawnManager = new __WEBPACK_IMPORTED_MODULE_0__BombsSpawnManager__["a" /* default */](gameContainer);
-        binsSpawnManager = new __WEBPACK_IMPORTED_MODULE_1__BinsSpawnManager__["a" /* default */](gameContainer);
-        updateScoreHtml();
-    }
-    GameManager.initialSetup = initialSetup;
-    function gameOver() {
-        bombsSpawnManager.onGameOver();
-        binsSpawnManager.onGameOver();
-    }
-    GameManager.gameOver = gameOver;
-    function addToScore(num) {
-        score += num;
-        updateScoreHtml();
-    }
-    GameManager.addToScore = addToScore;
-    function updateScoreHtml() {
-        scoreElement.innerHTML = "Score: " + score;
-    }
-})(GameManager || (GameManager = {}));
-/* harmony default export */ __webpack_exports__["a"] = (GameManager);
-
-
-/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -229,7 +229,7 @@ Colors.colorsHex = [];
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__styles_app_scss__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__styles_app_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__styles_app_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GameManager__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GameManager__ = __webpack_require__(0);
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -291,12 +291,12 @@ if(false) {
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 exports.i(__webpack_require__(6), "");
 
 // module
-exports.push([module.i, "body, html {\n  height: 100%; }\n\nbody {\n  font-family: \"Open Sans\", arial, x-locale-body, sans-serif; }\n\ndiv#game {\n  text-align: center;\n  height: 100%; }\n  div#game div.bins-container {\n    text-align: center;\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: 30%; }\n    div#game div.bins-container div.bin {\n      width: 10vw;\n      height: 100%;\n      display: inline-block;\n      margin: 0 4vw; }\n  div#game div.bin-timer-countdown {\n    background: #EEE;\n    display: inline-block;\n    position: absolute;\n    width: 20vh;\n    line-height: 20vh;\n    font-size: 8vh;\n    right: 15px;\n    bottom: 15px;\n    color: #666;\n    border-radius: 50%; }\n  div#game div.bombs-container {\n    text-align: left;\n    margin-left: 26vw;\n    margin-right: 26vw;\n    height: 70%; }\n    div#game div.bombs-container div.bomb {\n      position: absolute;\n      height: 10vh;\n      width: 10vh;\n      margin-right: 10vh;\n      display: inline-block; }\n      div#game div.bombs-container div.bomb.draggable--original {\n        opacity: 1; }\n  div#game .score {\n    position: absolute;\n    left: 25px;\n    top: 25px;\n    font-family: monospace;\n    font-size: 2em;\n    color: #666; }\n", ""]);
+exports.push([module.i, "body, html {\n  height: 100%; }\n\nbody {\n  font-family: \"Open Sans\", arial, x-locale-body, sans-serif; }\n\ndiv#game {\n  text-align: center;\n  height: 100%; }\n  div#game div.bins-container {\n    text-align: center;\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: 30%; }\n    div#game div.bins-container div.bin {\n      width: 10vw;\n      height: 100%;\n      display: inline-block;\n      margin: 0 4vw; }\n  div#game div.bin-timer-countdown {\n    background: #EEE;\n    display: inline-block;\n    position: absolute;\n    width: 20vh;\n    line-height: 20vh;\n    font-size: 8vh;\n    right: 15px;\n    bottom: 15px;\n    color: #666;\n    border-radius: 50%; }\n  div#game div.bombs-container {\n    text-align: left;\n    margin-left: 26vw;\n    margin-right: 26vw;\n    height: 70%; }\n    div#game div.bombs-container div.bomb {\n      position: absolute;\n      height: 10vh;\n      width: 10vh;\n      margin-right: 10vh;\n      display: inline-block;\n      border-radius: 50%; }\n      div#game div.bombs-container div.bomb.draggable-source--is-dragging {\n        opacity: 0; }\n      div#game div.bombs-container div.bomb.disabled {\n        display: none; }\n  div#game .score {\n    position: absolute;\n    left: 25px;\n    top: 25px;\n    font-family: monospace;\n    font-size: 2em;\n    color: #666; }\n", ""]);
 
 // exports
 
@@ -305,7 +305,7 @@ exports.push([module.i, "body, html {\n  height: 100%; }\n\nbody {\n  font-famil
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(0)(false);
+exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
@@ -798,7 +798,7 @@ module.exports = function (css) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Bomb__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GameManager__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__GameManager__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_shopify_draggable_lib_droppable__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_shopify_draggable_lib_droppable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__node_modules_shopify_draggable_lib_droppable__);
 
@@ -826,7 +826,14 @@ class BombSpawnManager {
             let original = e.originalSource;
             let bomb = this.findBombByHTMLNode(original);
             e.source.parentElement.classList.remove('draggable-droppable--occupied');
-            bomb.onDropped(e.source.parentElement);
+            if (bomb.enabled) {
+                bomb.onDropped(e.source.parentElement);
+            }
+        });
+        droppable.on('mirror:destroy', (e) => {
+            if (e.mirror.parentNode === null) {
+                e.cancel();
+            }
         });
     }
     findBombByHTMLNode(node) {
@@ -851,15 +858,13 @@ class BombSpawnManager {
         let containerBounds = this.bombsContainer.getBoundingClientRect();
         let bombPixelsWidth = (window.innerHeight / 100) * this.BOMB_WIDTH_VH;
         let bombPixelsHeight = (window.innerHeight / 100) * this.BOMB_HEIGHT_VH;
-        let elementAlreadyAt;
         let left;
         let top;
         do {
             left = Math.random() * (containerBounds.width - bombPixelsWidth) + containerBounds.left;
             top = Math.random() * (containerBounds.height - bombPixelsHeight) + containerBounds.top;
             console.log(left, top);
-            elementAlreadyAt = document.elementFromPoint(left, top);
-        } while (elementAlreadyAt.matches('.bomb'));
+        } while (document.elementFromPoint(left, top).matches('.bomb'));
         return { left, top };
     }
     scheduleNextBombSpawn() {
@@ -883,15 +888,18 @@ class BombSpawnManager {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameManager__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameManager__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Colors__ = __webpack_require__(2);
 
 
 class Bomb {
     constructor() {
+        this.enabled = true;
+        this.id = Date.now();
         this.html = document.createElement('div');
-        this.html.classList.add('bomb');
+        this.html.classList.add('bomb', 'bomb-' + this.id);
         this.html.style.background = '#' + __WEBPACK_IMPORTED_MODULE_1__Colors__["a" /* default */].getRandomColorHex(true);
+        this.handleExplosionTiming();
     }
     onDropped(collided) {
         let initialBounds = this.html.getBoundingClientRect();
@@ -902,8 +910,29 @@ class Bomb {
             else {
                 __WEBPACK_IMPORTED_MODULE_0__GameManager__["a" /* default */].addToScore(-1);
             }
-            this.html.remove();
+            this.destroy();
         }
+    }
+    handleExplosionTiming() {
+        let countDown = 5 + Math.floor(Math.random() * 6);
+        let id = setInterval(() => {
+            countDown--;
+            [...document.querySelectorAll('.bomb-' + this.id)].forEach((e) => e.innerHTML = countDown.toString());
+            this.html.innerHTML = countDown.toString();
+            if (countDown === 0) {
+                clearInterval(id);
+                if (this.html.parentElement) {
+                    this.destroy();
+                    __WEBPACK_IMPORTED_MODULE_0__GameManager__["a" /* default */].addToScore(-1);
+                }
+            }
+        }, 1000);
+    }
+    destroy() {
+        setTimeout(() => {
+            this.enabled = false;
+            [...document.querySelectorAll('.bomb-' + this.id)].forEach((e) => e.remove());
+        });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Bomb;

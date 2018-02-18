@@ -34,10 +34,20 @@ export default class BombSpawnManager {
 		droppable.on('drag:stop', (e:any) => {
 			let original = e.originalSource as HTMLElement;
 			let bomb = this.findBombByHTMLNode(original);
+
 			// avoid the "occupied" logic the pluggin offers by removing this class
 			e.source.parentElement.classList.remove('draggable-droppable--occupied');
-			bomb.onDropped(e.source.parentElement);
+			if (bomb.enabled) { 
+				bomb.onDropped(e.source.parentElement);
+			}
 		});
+
+		droppable.on('mirror:destroy', (e:any) => {
+			if (e.mirror.parentNode === null) {
+				// already removed, cancel event to prevent an error on "Draggable" library
+				e.cancel();
+			}
+		})
 
 	}
 
@@ -64,15 +74,13 @@ export default class BombSpawnManager {
 		let containerBounds = this.bombsContainer.getBoundingClientRect();
 		let bombPixelsWidth = (window.innerHeight / 100) * this.BOMB_WIDTH_VH;
 		let bombPixelsHeight = (window.innerHeight / 100) * this.BOMB_HEIGHT_VH;
-		let elementAlreadyAt:Element;
 		let left:number;
 		let top:number;
 		do {
 			left = Math.random()  * (containerBounds.width - bombPixelsWidth) + containerBounds.left;
 			top = Math.random() * (containerBounds.height - bombPixelsHeight) + containerBounds.top;
 			console.log(left, top);
-			elementAlreadyAt = document.elementFromPoint(left, top);
-		} while(elementAlreadyAt.matches('.bomb'));
+		} while(document.elementFromPoint(left, top).matches('.bomb'));
 		return {left, top};
 	}
 
