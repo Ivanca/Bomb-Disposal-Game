@@ -11,11 +11,20 @@ body {
 }
 
 div#game {
+	@import 'bins';
+	@import 'bombs';
+
+	.score {
+		position: absolute;
+		left: 25px;
+		top: 25px;
+		font-family: monospace;
+	    font-size: 2em;
+	    color: #666;
+	}
 
 	text-align: center;
 	height: 100%;
 
-	@import 'bins';
-	@import 'bombs';
 }
 
