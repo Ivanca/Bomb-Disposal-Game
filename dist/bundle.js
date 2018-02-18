@@ -10671,7 +10671,7 @@ exports = module.exports = __webpack_require__(2)(false);
 exports.i(__webpack_require__(7), "");
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: ShadowsIntoLight;\n  src: url(./fonts/ShadowsIntoLight.ttf); }\n\nbody, html {\n  height: 100%; }\n\nbody {\n  font-family: ShadowsIntoLight; }\n\ndiv#game {\n  text-align: center;\n  height: 100%;\n  overflow: hidden;\n  position: relative; }\n  div#game div.bins-container {\n    text-align: center;\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: baseline; }\n    div#game div.bins-container div.bin {\n      display: inline-block;\n      margin: 0 4vw;\n      transition: width 0.1s, height 0.1s; }\n      div#game div.bins-container div.bin div {\n        display: none; }\n  div#game div.bin-timer-countdown {\n    background: #EEE;\n    display: inline-block;\n    position: absolute;\n    width: 5vw;\n    line-height: 5vw;\n    font-size: 2vw;\n    right: 2.5vw;\n    bottom: 2.5vw;\n    color: #666;\n    border-radius: 50%; }\n  div#game div.bombs-container {\n    text-align: left;\n    margin-left: 26vw;\n    margin-right: 26vw;\n    height: 70%; }\n    div#game div.bombs-container div.bomb {\n      position: absolute;\n      line-height: 10vh;\n      height: 10vh;\n      width: 10vh;\n      display: inline-block;\n      border-radius: 50%;\n      font-weight: bold;\n      font-size: 3vh;\n      color: white;\n      text-align: center;\n      cursor: pointer; }\n      div#game div.bombs-container div.bomb.draggable-mirror {\n        line-height: 11vh;\n        height: 11vh;\n        width: 11vh;\n        margin-top: -0.5vh;\n        margin-left: -0.5vh; }\n      div#game div.bombs-container div.bomb svg {\n        max-width: 100%; }\n      div#game div.bombs-container div.bomb .countdown {\n        display: block;\n        position: absolute;\n        height: 87%;\n        pointer-events: none;\n        width: 72%;\n        bottom: 0;\n        left: 0; }\n      div#game div.bombs-container div.bomb.draggable-source--is-dragging {\n        opacity: 0; }\n      div#game div.bombs-container div.bomb.disabled {\n        display: none; }\n  div#game .score {\n    position: absolute;\n    left: 25px;\n    top: 25px;\n    font-size: 2em;\n    color: #666; }\n\ndiv.gameover {\n  position: absolute;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  background: #c292ff;\n  text-align: center;\n  font-size: 6vw;\n  line-height: 8vw;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  text-shadow: 1px 1px black; }\n  div.gameover strong {\n    font-size: 2em;\n    color: rebeccapurple; }\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: ShadowsIntoLight;\n  src: url(./fonts/ShadowsIntoLight.ttf); }\n\nbody, html {\n  height: 100%; }\n\nbody {\n  font-family: ShadowsIntoLight; }\n\ndiv#game {\n  text-align: center;\n  height: 100%;\n  overflow: hidden;\n  position: relative; }\n  div#game div.bins-container {\n    text-align: center;\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: baseline;\n    z-index: 2; }\n    div#game div.bins-container div.bin {\n      display: inline-block;\n      transition: width 0.1s, height 0.1s; }\n      div#game div.bins-container div.bin div {\n        display: none; }\n  div#game div.bin-timer-countdown {\n    background: #EEE;\n    display: inline-block;\n    position: absolute;\n    width: 5vw;\n    line-height: 5vw;\n    font-size: 2vw;\n    right: 2.5vw;\n    bottom: 2.5vw;\n    color: #666;\n    border-radius: 50%; }\n  div#game div.bombs-container {\n    text-align: left;\n    margin-left: 26vw;\n    margin-right: 26vw;\n    height: 70%; }\n    div#game div.bombs-container div.bomb {\n      position: absolute;\n      line-height: 10vh;\n      height: 10vh;\n      width: 10vh;\n      display: inline-block;\n      border-radius: 50%;\n      font-weight: bold;\n      font-size: 3vh;\n      color: white;\n      text-align: center;\n      cursor: pointer; }\n      div#game div.bombs-container div.bomb.draggable-mirror {\n        line-height: 11vh;\n        height: 11vh;\n        width: 11vh;\n        margin-top: -0.5vh;\n        margin-left: -0.5vh; }\n      div#game div.bombs-container div.bomb svg {\n        max-width: 100%; }\n      div#game div.bombs-container div.bomb .countdown {\n        display: block;\n        position: absolute;\n        height: 87%;\n        pointer-events: none;\n        width: 72%;\n        bottom: 0;\n        left: 0; }\n      div#game div.bombs-container div.bomb.draggable-source--is-dragging {\n        opacity: 0; }\n      div#game div.bombs-container div.bomb.disabled {\n        display: none; }\n  div#game .score {\n    position: absolute;\n    left: 25px;\n    top: 25px;\n    font-size: 2em;\n    color: #666; }\n\ndiv.gameover {\n  position: absolute;\n  z-index: 2;\n  width: 100%;\n  height: 100%;\n  background: #c292ff;\n  text-align: center;\n  font-size: 6vw;\n  line-height: 8vw;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  text-shadow: 1px 1px black; }\n  div.gameover strong {\n    font-size: 2em;\n    color: rebeccapurple; }\n", ""]);
 
 // exports
 
@@ -11203,12 +11203,12 @@ class BombSpawnManager {
         this.droppable.on('drag:stop', (e) => {
             let original = e.originalSource;
             let bomb = this.findBombByHTMLNode(original);
-            __WEBPACK_IMPORTED_MODULE_3_jquery___default()(e.source).parent().removeClass('draggable-droppable--occupied');
             if (bomb.enabled) {
                 bomb.onDropped(e.source.parentElement);
             }
         });
         this.droppable.on('mirror:destroy', (e) => {
+            __WEBPACK_IMPORTED_MODULE_3_jquery___default()('.draggable-droppable--occupied').removeClass('draggable-droppable--occupied');
             if (e.mirror.parentNode === null) {
                 e.cancel();
             }
@@ -11240,7 +11240,7 @@ class BombSpawnManager {
             left = Math.max(left, 0);
             top = Math.random() * (containerBounds.height - bombPixelsHeight) + containerBounds.top;
             top = Math.max(top, 0);
-        } while (document.elementFromPoint(left, top).matches('.bomb'));
+        } while (document.elementFromPoint(left, top).matches('.bomb, .bin'));
         return {
             left: (left / window.innerWidth * 100) + '%',
             top: (top / window.innerHeight * 100) + '%'
@@ -11322,7 +11322,7 @@ class Bomb {
     destroy() {
         clearInterval(this.explosionInterval);
         this.enabled = false;
-        setTimeout(() => __WEBPACK_IMPORTED_MODULE_2_jquery___default()('.' + this.class).addClass('disabled').remove());
+        setTimeout(() => __WEBPACK_IMPORTED_MODULE_2_jquery___default()('.' + this.class).addClass('disabled'));
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Bomb;
@@ -18600,7 +18600,11 @@ class Bin {
         this.colorChangeHandler();
     }
     colorChangeHandler() {
-        this.color = __WEBPACK_IMPORTED_MODULE_0__Colors__["a" /* default */].getRandomColorHex();
+        let color = __WEBPACK_IMPORTED_MODULE_0__Colors__["a" /* default */].getRandomColorHex();
+        if (color === this.color) {
+            return this.colorChangeHandler();
+        }
+        this.color = color;
         this.html.querySelector('svg').style.fill = this.color;
     }
     onScore() {
