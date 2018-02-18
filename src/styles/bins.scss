@@ -8,12 +8,12 @@ div.bins-container {
 	align-items: baseline;
 	div.bin {
 		display: inline-block;
-		margin: 0 4vw;
 		div {
 			display: none;
 		}
 		transition: width 0.1s, height 0.1s;
 	}
+	z-index: 2;
 }
 
 div.bin-timer-countdown {

@@ -36,14 +36,14 @@ export default class BombSpawnManager {
 		this.droppable.on('drag:stop', (e:any) => {
 			let original = e.originalSource as HTMLElement;
 			let bomb = this.findBombByHTMLNode(original);
-			// avoid the "occupied" logic the pluggin offers by removing this class
-			$(e.source).parent().removeClass('draggable-droppable--occupied');
 			if (bomb.enabled) { 
 				bomb.onDropped(e.source.parentElement);
 			}
 		});
 
 		this.droppable.on('mirror:destroy', (e:any) => {
+			// avoid the "occupied" logic the pluggin offers by removing this class
+			$('.draggable-droppable--occupied').removeClass('draggable-droppable--occupied');
 			if (e.mirror.parentNode === null) {
 				// already removed, cancel event to prevent an error on "Draggable" library
 				e.cancel();
@@ -81,7 +81,7 @@ export default class BombSpawnManager {
 			left = Math.max(left, 0);
 			top = Math.random() * (containerBounds.height - bombPixelsHeight) + containerBounds.top;
 			top = Math.max(top, 0);
-		} while(document.elementFromPoint(left, top).matches('.bomb'));
+		} while(document.elementFromPoint(left, top).matches('.bomb, .bin'));
 		return {
 			left: (left / window.innerWidth * 100) + '%',
 			top: (top / window.innerHeight * 100) + '%'
