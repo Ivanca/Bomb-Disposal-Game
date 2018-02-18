@@ -4,8 +4,8 @@ import Bin from './bin';
 
 namespace GameManager {
 
-	let bombsSpawnManager:BombsSpawnManager;
-	let binsSpawnManager:BinsSpawnManager;
+	export let bombsSpawnManager:BombsSpawnManager;
+	export let binsSpawnManager:BinsSpawnManager;
 	let bins:Bin[];
 	let gameContainer:HTMLDivElement;
 	let scoreElement:HTMLDivElement;

@@ -6,10 +6,13 @@ div.bins-container {
 	height: 30%;
 	
 	div.bin {
-		width: 10vw;
+		width: 12vw;
 		height: 100%;
 		display: inline-block;
 		margin: 0 4vw;
+		div {
+			display: none;
+		}
 	}
 }
 

@@ -6,11 +6,16 @@ div.bombs-container {
 
 	div.bomb {
 		position: absolute;
+		line-height: 10vh;
 		height: 10vh;
 		width: 10vh;
 		margin-right: 10vh;
 		display: inline-block;
 		border-radius: 50%;
+		font-weight: bold;
+		font-size: 3vh;
+		color: white;
+		text-align: center;
 		&.draggable-source--is-dragging {
 			opacity: 0;
 		}

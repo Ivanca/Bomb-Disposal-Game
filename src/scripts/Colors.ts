@@ -4,9 +4,9 @@ class Colors {
 
 	static possibleColors():string[] {
 		return [
-			'2a9d8f', // Pale Blue
-			'e9c46a', // Pale Yellow
-			'e76f51', // Pale Red
+			'#2a9d8f', // Pale Blue
+			'#e9c46a', // Pale Yellow
+			'#e76f51', // Pale Red
 		]
 	}
 

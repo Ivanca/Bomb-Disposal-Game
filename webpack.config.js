@@ -1,4 +1,5 @@
 var path = require('path');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.resolve('src/scripts/main.ts'),
@@ -18,6 +19,12 @@ module.exports = {
   resolve: {
     extensions: [ '.ts', '.js', '.scss', '.sass' ]
   },
+
+  plugins: [
+      new CopyWebpackPlugin([
+          { from: 'src/images', to: 'images' }
+      ])
+  ],
 
   module: {
     rules: [{

@@ -30,6 +30,10 @@ export default class BinSpawnManager {
 		}, 1000);
 	}
 
+	findBinByHTMLNode(node:HTMLElement):Bin {
+		return this.bins.find((bin)=> bin.html === node);
+	}
+
 	onGameOver() {
 		clearInterval(this.setIntervalId);
 	}
