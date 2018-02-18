@@ -1,18 +1,28 @@
-
 import BombsSpawnManager from './BombsSpawnManager';
 import BinsSpawnManager from './BinsSpawnManager';
 import Bin from './bin';
 
-export default class GameManager {
-	
-	spawnManager:BombsSpawnManager;
-	binsSpawnManager:BinsSpawnManager;
-	bins:Bin[];
-	html:HTMLDivElement;
-	constructor() {
+
+
+namespace GameManager {
+
+	let bombsSpawnManager:BombsSpawnManager;
+	let binsSpawnManager:BinsSpawnManager;
+	let bins:Bin[];
+	let gameContainer:HTMLDivElement;
+	let score:HTMLDivElement;
+
+	export function initialSetup() {
 		// code...
-		this.html = document.querySelector('#game');
-		this.spawnManager = new BombsSpawnManager(this.html);
-		this.binsSpawnManager = new BinsSpawnManager(this.html);
+		gameContainer = document.querySelector('#game') as HTMLDivElement;
+		bombsSpawnManager = new BombsSpawnManager(gameContainer);
+		binsSpawnManager = new BinsSpawnManager(gameContainer);
+	}
+
+	export function gameOver() {
+		bombsSpawnManager.onGameOver();
+		binsSpawnManager.onGameOver();
 	}
 }
+
+export default GameManager;
