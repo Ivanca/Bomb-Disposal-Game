@@ -70,7 +70,7 @@ export default class BombSpawnManager {
 		}
 	}
 
-	getRandomUnoccupiedPosition():{left:number, top:number} {
+	getRandomUnoccupiedPosition():{left:string, top:string} {
 		let containerBounds = this.bombsContainer.getBoundingClientRect();
 		let bombPixelsWidth = (window.innerHeight / 100) * this.BOMB_WIDTH_VH;
 		let bombPixelsHeight = (window.innerHeight / 100) * this.BOMB_HEIGHT_VH;
@@ -82,7 +82,10 @@ export default class BombSpawnManager {
 			top = Math.random() * (containerBounds.height - bombPixelsHeight) + containerBounds.top;
 			top = Math.max(top, 0);
 		} while(document.elementFromPoint(left, top).matches('.bomb'));
-		return {left, top};
+		return {
+			left: (left / window.innerWidth * 100) + '%',
+			top: (top / window.innerHeight * 100) + '%'
+		};
 	}
 
 	scheduleNextBombSpawn() {

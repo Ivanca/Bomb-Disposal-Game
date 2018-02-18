@@ -9,7 +9,6 @@ div.bombs-container {
 		line-height: 10vh;
 		height: 10vh;
 		width: 10vh;
-		margin-right: 10vh;
 		display: inline-block;
 		border-radius: 50%;
 		font-weight: bold;
@@ -17,6 +16,13 @@ div.bombs-container {
 		color: white;
 		text-align: center;
 		cursor: pointer;
+		&.draggable-mirror {
+			line-height: 11vh;
+			height: 11vh;
+			width: 11vh;
+			margin-top: -0.5vh;
+			margin-left: -0.5vh;
+		}
 		svg {
 			max-width:100%;
 		}
