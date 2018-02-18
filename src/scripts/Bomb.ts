@@ -29,6 +29,7 @@ export default class Bomb {
 			let bin = GameManager.binsSpawnManager.findBinByHTMLNode(collided);
 			if (this.color === bin.color) {
 				GameManager.addToScore(+1);
+				bin.onScore();
 			}  else {
 				GameManager.addToScore(-1);
 			}
