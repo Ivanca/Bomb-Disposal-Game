@@ -37,16 +37,18 @@ export default class Bomb {
 	}
 
 	private handleExplosionTiming() {
-		let countDown = 5 + Math.floor(Math.random() * 6);
-		this.explosionInterval = setInterval(()=> {
+		let countDown = 6 + Math.floor(Math.random() * 6);
+		let everySecondCallback = ()=> {
 			countDown--;
-			$('.' + this.class).find('.countdown').html(countDown.toString());
+			this.$html.add('.' + this.class).find('.countdown').html(countDown.toString());
 			if (countDown === 0) {
 				this.destroy();
 				// penalty for taking too long to remove this bomb;
 				GameManager.addToScore(-1);
 			}
-		}, 1000);
+		}
+		this.explosionInterval = setInterval(everySecondCallback, 1000);
+		everySecondCallback();
 	}
 
 	private destroy() {
