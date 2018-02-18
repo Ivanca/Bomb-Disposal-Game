@@ -16,21 +16,28 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.scss', '.sass' ]
+    extensions: [ '.ts', '.js', '.scss', '.sass' ]
   },
 
   module: {
     rules: [{
         test: /\.js$/,
-        use: 'babel-loader'
+        exclude: /node_modules|dist/,
+        use: {
+          loader:'babel-loader',
+          query: {
+            presets: ['es2015']
+          }
+        }
       },
       {
-        test: /\.tsx?$/,
+        test: /\.ts$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules|dist/
       },
       {
         test: /\.scss$/,
+        exclude: /node_modules|dist/,
         use: [{
             loader: "style-loader" // creates style nodes from JS strings
         }, {
