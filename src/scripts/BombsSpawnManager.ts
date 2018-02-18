@@ -1,6 +1,7 @@
 import Bomb from './Bomb';
 import GameManager from './GameManager';
 import Droppable from './../../node_modules/@shopify/draggable/lib/droppable';
+import $ from 'jquery';
 
 export default class BombSpawnManager {
 	
@@ -10,20 +11,20 @@ export default class BombSpawnManager {
 	readonly BOMB_WIDTH_VH = 10;
 	readonly BOMB_HEIGHT_VH = 10;
 
-	bombsContainer:HTMLDivElement;
+	bombsContainer:HTMLElement;
 
 	spawnDelay:number;
 	spawningStartTime:number;
 	spawningEndTime:number;
-	bombCount:number = 0;
 	allBombs:Bomb[];
 
-	constructor(gameContainer:HTMLDivElement) {
+	constructor(gameContainer:HTMLElement) {
 		this.allBombs = [];
 		this.bombsContainer = document.createElement('div');
-		this.bombsContainer.classList.add('bombs-container');
 		this.spawningEndTime = Date.now() + (this.MAX_MINUTES * 60 * 1000);
-		gameContainer.appendChild(this.bombsContainer);
+		$(this.bombsContainer)
+			.addClass('bombs-container')
+			.appendTo(gameContainer);
 		this.spawnBomb();
 
 		let droppable = new Droppable(gameContainer, {
@@ -34,9 +35,8 @@ export default class BombSpawnManager {
 		droppable.on('drag:stop', (e:any) => {
 			let original = e.originalSource as HTMLElement;
 			let bomb = this.findBombByHTMLNode(original);
-
 			// avoid the "occupied" logic the pluggin offers by removing this class
-			e.source.parentElement.classList.remove('draggable-droppable--occupied');
+			$(e.source).parent().removeClass('draggable-droppable--occupied');
 			if (bomb.enabled) { 
 				bomb.onDropped(e.source.parentElement);
 			}
@@ -56,14 +56,13 @@ export default class BombSpawnManager {
 	}
 
 	spawnBomb() {
-		let randomPosition = this.getRandomUnoccupiedPosition();
-		this.bombCount++;
 		let bomb = new Bomb();
-		bomb.html.style.left = randomPosition.left + 'px';
-		bomb.html.style.top = randomPosition.top + 'px';
+		let {top, left} = this.getRandomUnoccupiedPosition();
+
+		$(bomb.html).css({top, left}).appendTo(this.bombsContainer);
 		this.allBombs.push(bomb);
-		this.bombsContainer.appendChild(bomb.html);
-		if (Date.now() > this.spawningEndTime || this.bombCount > 120) {
+
+		if (Date.now() > this.spawningEndTime || this.allBombs.length > 120) {
 			GameManager.gameOver();
 		} else {
 			this.scheduleNextBombSpawn();

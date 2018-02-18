@@ -1,24 +1,22 @@
-// declare module "./../../node_modules/@shopify/draggable/lib/draggable.js" {
-// 	var Draggable:any;
-// 	export = Draggable;
-// };
 import GameManager from './GameManager';
 import Colors from './Colors';
+import $ from 'jquery';
 
 export default class Bomb {
 
 	public html: HTMLDivElement;
 	public enabled: boolean;
-	id: number;
+	class: string;
+	explosionInterval: number;
 
 	constructor() {
 		this.enabled = true;
-		this.id = Date.now();
+		// unique classname
+		this.class = 'bomb-' + Date.now();
 		this.html = document.createElement('div');
-		this.html.classList.add('bomb', 'bomb-' + this.id);
+		this.html.classList.add('bomb', this.class);
 		this.html.style.background = '#' + Colors.getRandomColorHex(true);
 		this.handleExplosionTiming();
-		// code...
 	}
 
 	public onDropped(collided:HTMLElement) {
@@ -35,30 +33,22 @@ export default class Bomb {
 
 	private handleExplosionTiming() {
 		let countDown = 5 + Math.floor(Math.random() * 6);
-		let id = setInterval(()=> {
+		this.explosionInterval = setInterval(()=> {
 			countDown--;
-			[...document.querySelectorAll('.bomb-' + this.id)].forEach(
-				(e) => e.innerHTML = countDown.toString()
-			)
-			this.html.innerHTML = countDown.toString();
+			$('.' + this.class).html(countDown.toString());
 			if (countDown === 0) {
-				clearInterval(id);
-				if (this.html.parentElement) {
-					this.destroy();
-					// penalty for taking too long to remove this bomb;
-					GameManager.addToScore(-1);
-				}
+				this.destroy();
+				// penalty for taking too long to remove this bomb;
+				GameManager.addToScore(-1);
 			}
 		}, 1000);
 	}
 
 	private destroy() {
-		setTimeout(()=>{
-			this.enabled = false;
-			[...document.querySelectorAll('.bomb-' + this.id)].forEach(
-				(e)=> e.remove()
-			)
-		})
+		clearInterval(this.explosionInterval);
+		this.enabled = false;
+		// making sure to delete any dragging clones as well
+		setTimeout(()=> $('.' + this.class).remove())
 	}
 
 }

@@ -1,21 +1,20 @@
 import Bin from './Bin';
+import $ from 'jquery';
 
 export default class BinSpawnManager {
 
 	bins:Bin[];
-	binsContainer: HTMLDivElement;
-	swapColorCountdown: HTMLDivElement; 
+	$binsContainer: JQuery<HTMLElement>;
+	$swapColorCountdown: JQuery<HTMLElement>; 
 	setIntervalId: number;
 
-	constructor(gameContainer:HTMLDivElement) {
-		this.binsContainer = document.createElement('div');
-		this.binsContainer.classList.add('bins-container');
+	constructor(game:HTMLElement) {
 		this.bins = [new Bin, new Bin, new Bin];
-		this.bins.forEach((bin) => this.binsContainer.appendChild(bin.html));
-		this.swapColorCountdown = document.createElement('div');
-		this.swapColorCountdown.classList.add('bin-timer-countdown');
-		gameContainer.appendChild(this.binsContainer);
-		gameContainer.appendChild(this.swapColorCountdown);
+		this.$binsContainer = $('<div class="bins-container">')
+			.append(this.bins.map((e) => e.html))
+			.appendTo(game);
+		this.$swapColorCountdown = $('<div class="bin-timer-countdown">')
+			.appendTo(game);
 		this.startCountdown();
 	}
 
@@ -23,12 +22,11 @@ export default class BinSpawnManager {
 		const delayInSeconds = 40;
 		let countDown = delayInSeconds;
 		this.setIntervalId = setInterval(() => {
-			countDown--;
-			if (countDown === 0) {
+			if (--countDown === 0) {
 				this.bins.forEach((bin) => bin.colorChangeHandler());
 				countDown = delayInSeconds;
 			}
-			this.swapColorCountdown.innerHTML = countDown.toString();
+			this.$swapColorCountdown.html(countDown.toString());
 		}, 1000);
 	}
 
