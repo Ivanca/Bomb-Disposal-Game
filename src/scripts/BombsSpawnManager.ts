@@ -17,6 +17,7 @@ export default class BombSpawnManager {
 	spawningStartTime:number;
 	spawningEndTime:number;
 	allBombs:Bomb[];
+	droppable:any;
 
 	constructor(gameContainer:HTMLElement) {
 		this.allBombs = [];
@@ -27,12 +28,12 @@ export default class BombSpawnManager {
 			.appendTo(gameContainer);
 		this.spawnBomb();
 
-		let droppable = new Droppable(gameContainer, {
+		this.droppable = new Droppable(gameContainer, {
 			draggable: '.bomb',
 			droppable: '.bin, .bombs-container'
 		});
 
-		droppable.on('drag:stop', (e:any) => {
+		this.droppable.on('drag:stop', (e:any) => {
 			let original = e.originalSource as HTMLElement;
 			let bomb = this.findBombByHTMLNode(original);
 			// avoid the "occupied" logic the pluggin offers by removing this class
@@ -42,12 +43,12 @@ export default class BombSpawnManager {
 			}
 		});
 
-		droppable.on('mirror:destroy', (e:any) => {
+		this.droppable.on('mirror:destroy', (e:any) => {
 			if (e.mirror.parentNode === null) {
 				// already removed, cancel event to prevent an error on "Draggable" library
 				e.cancel();
 			}
-		})
+		});
 
 	}
 
@@ -95,6 +96,11 @@ export default class BombSpawnManager {
 	}
 
 	onGameOver() {
-		
+		this.droppable.destroy();
+		this.allBombs.forEach((bomb)=>{
+			bomb.enabled = false; 
+			bomb.$html.remove();
+		});
+		this.allBombs = [];
 	}
 }
