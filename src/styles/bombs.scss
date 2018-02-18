@@ -9,8 +9,8 @@ div.bombs-container {
 		width: 10vh;
 		margin-right: 10vh;
 		display: inline-block;
-		.spacer {
-			opacity: 0;
+		&.draggable--original {
+			opacity: 1;
 		}
 	}
 }

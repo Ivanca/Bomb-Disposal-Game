@@ -160,11 +160,16 @@ var GameManager;
     let binsSpawnManager;
     let bins;
     let gameContainer;
-    let score;
+    let scoreElement;
+    let score = 0;
     function initialSetup() {
         gameContainer = document.querySelector('#game');
+        scoreElement = document.createElement('div');
+        scoreElement.classList.add('score');
+        gameContainer.appendChild(scoreElement);
         bombsSpawnManager = new __WEBPACK_IMPORTED_MODULE_0__BombsSpawnManager__["a" /* default */](gameContainer);
         binsSpawnManager = new __WEBPACK_IMPORTED_MODULE_1__BinsSpawnManager__["a" /* default */](gameContainer);
+        updateScoreHtml();
     }
     GameManager.initialSetup = initialSetup;
     function gameOver() {
@@ -172,6 +177,14 @@ var GameManager;
         binsSpawnManager.onGameOver();
     }
     GameManager.gameOver = gameOver;
+    function addToScore(num) {
+        score += num;
+        updateScoreHtml();
+    }
+    GameManager.addToScore = addToScore;
+    function updateScoreHtml() {
+        scoreElement.innerHTML = "Score: " + score;
+    }
 })(GameManager || (GameManager = {}));
 /* harmony default export */ __webpack_exports__["a"] = (GameManager);
 
@@ -283,7 +296,7 @@ exports = module.exports = __webpack_require__(0)(false);
 exports.i(__webpack_require__(6), "");
 
 // module
-exports.push([module.i, "body, html {\n  height: 100%; }\n\nbody {\n  font-family: \"Open Sans\", arial, x-locale-body, sans-serif; }\n\ndiv#game {\n  text-align: center;\n  height: 100%; }\n  div#game div.bins-container {\n    text-align: center;\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: 30%; }\n    div#game div.bins-container div.bin {\n      width: 10vw;\n      height: 100%;\n      display: inline-block;\n      margin: 0 4vw; }\n  div#game div.bin-timer-countdown {\n    background: #EEE;\n    display: inline-block;\n    position: absolute;\n    width: 20vh;\n    line-height: 20vh;\n    font-size: 8vh;\n    right: 15px;\n    bottom: 15px;\n    color: #666;\n    border-radius: 50%; }\n  div#game div.bombs-container {\n    text-align: left;\n    margin-left: 26vw;\n    margin-right: 26vw;\n    height: 70%; }\n    div#game div.bombs-container div.bomb {\n      position: absolute;\n      height: 10vh;\n      width: 10vh;\n      margin-right: 10vh;\n      display: inline-block; }\n      div#game div.bombs-container div.bomb .spacer {\n        opacity: 0; }\n", ""]);
+exports.push([module.i, "body, html {\n  height: 100%; }\n\nbody {\n  font-family: \"Open Sans\", arial, x-locale-body, sans-serif; }\n\ndiv#game {\n  text-align: center;\n  height: 100%; }\n  div#game div.bins-container {\n    text-align: center;\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: 30%; }\n    div#game div.bins-container div.bin {\n      width: 10vw;\n      height: 100%;\n      display: inline-block;\n      margin: 0 4vw; }\n  div#game div.bin-timer-countdown {\n    background: #EEE;\n    display: inline-block;\n    position: absolute;\n    width: 20vh;\n    line-height: 20vh;\n    font-size: 8vh;\n    right: 15px;\n    bottom: 15px;\n    color: #666;\n    border-radius: 50%; }\n  div#game div.bombs-container {\n    text-align: left;\n    margin-left: 26vw;\n    margin-right: 26vw;\n    height: 70%; }\n    div#game div.bombs-container div.bomb {\n      position: absolute;\n      height: 10vh;\n      width: 10vh;\n      margin-right: 10vh;\n      display: inline-block; }\n      div#game div.bombs-container div.bomb.draggable--original {\n        opacity: 1; }\n  div#game .score {\n    position: absolute;\n    left: 25px;\n    top: 25px;\n    font-family: monospace;\n    font-size: 2em;\n    color: #666; }\n", ""]);
 
 // exports
 
@@ -793,17 +806,31 @@ module.exports = function (css) {
 
 class BombSpawnManager {
     constructor(gameContainer) {
-        this.MAX_MINUTES = 0.3;
+        this.MAX_MINUTES = 2;
         this.INTERVAL_MAX_SECONDS = 5;
         this.INTERVAL_MIN_SECONDS = 0.5;
         this.BOMB_WIDTH_VH = 10;
         this.BOMB_HEIGHT_VH = 10;
         this.bombCount = 0;
+        this.allBombs = [];
         this.bombsContainer = document.createElement('div');
         this.bombsContainer.classList.add('bombs-container');
         this.spawningEndTime = Date.now() + (this.MAX_MINUTES * 60 * 1000);
         gameContainer.appendChild(this.bombsContainer);
         this.spawnBomb();
+        let droppable = new __WEBPACK_IMPORTED_MODULE_2__node_modules_shopify_draggable_lib_droppable___default.a(gameContainer, {
+            draggable: '.bomb',
+            droppable: '.bin, .bombs-container'
+        });
+        droppable.on('drag:stop', (e) => {
+            let original = e.originalSource;
+            let bomb = this.findBombByHTMLNode(original);
+            e.source.parentElement.classList.remove('draggable-droppable--occupied');
+            bomb.onDropped(e.source.parentElement);
+        });
+    }
+    findBombByHTMLNode(node) {
+        return this.allBombs.find((bomb) => bomb.html === node);
     }
     spawnBomb() {
         let randomPosition = this.getRandomUnoccupiedPosition();
@@ -811,8 +838,9 @@ class BombSpawnManager {
         let bomb = new __WEBPACK_IMPORTED_MODULE_0__Bomb__["a" /* default */]();
         bomb.html.style.left = randomPosition.left + 'px';
         bomb.html.style.top = randomPosition.top + 'px';
+        this.allBombs.push(bomb);
         this.bombsContainer.appendChild(bomb.html);
-        if (Date.now() > this.spawningEndTime || this.bombCount > 1) {
+        if (Date.now() > this.spawningEndTime || this.bombCount > 120) {
             __WEBPACK_IMPORTED_MODULE_1__GameManager__["a" /* default */].gameOver();
         }
         else {
@@ -844,11 +872,6 @@ class BombSpawnManager {
         }, delay);
     }
     onGameOver() {
-        let droppable = new __WEBPACK_IMPORTED_MODULE_2__node_modules_shopify_draggable_lib_droppable___default.a(document.querySelector('#game'), {
-            draggable: '.bomb',
-            droppable: '.bin, .bombs-container'
-        });
-        console.log(droppable);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BombSpawnManager;
@@ -860,13 +883,27 @@ class BombSpawnManager {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Colors__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GameManager__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Colors__ = __webpack_require__(2);
+
 
 class Bomb {
     constructor() {
         this.html = document.createElement('div');
         this.html.classList.add('bomb');
-        this.html.style.background = '#' + __WEBPACK_IMPORTED_MODULE_0__Colors__["a" /* default */].getRandomColorHex(true);
+        this.html.style.background = '#' + __WEBPACK_IMPORTED_MODULE_1__Colors__["a" /* default */].getRandomColorHex(true);
+    }
+    onDropped(collided) {
+        let initialBounds = this.html.getBoundingClientRect();
+        if (collided.matches('.bin')) {
+            if (this.html.style.background === collided.style.background) {
+                __WEBPACK_IMPORTED_MODULE_0__GameManager__["a" /* default */].addToScore(+1);
+            }
+            else {
+                __WEBPACK_IMPORTED_MODULE_0__GameManager__["a" /* default */].addToScore(-1);
+            }
+            this.html.remove();
+        }
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Bomb;

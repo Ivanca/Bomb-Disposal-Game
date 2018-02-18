@@ -19,6 +19,7 @@ namespace GameManager {
 		gameContainer.appendChild(scoreElement);
 		bombsSpawnManager = new BombsSpawnManager(gameContainer);
 		binsSpawnManager = new BinsSpawnManager(gameContainer);
+		updateScoreHtml();
 	}
 
 	export function gameOver() {
@@ -28,6 +29,10 @@ namespace GameManager {
 
 	export function addToScore(num:number) {
 		score += num;
+		updateScoreHtml();
+	}
+
+	function updateScoreHtml() {
 		scoreElement.innerHTML = "Score: " + score;
 	}
 }

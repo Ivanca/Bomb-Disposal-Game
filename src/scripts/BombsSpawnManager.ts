@@ -4,7 +4,7 @@ import Droppable from './../../node_modules/@shopify/draggable/lib/droppable';
 
 export default class BombSpawnManager {
 	
-	readonly MAX_MINUTES:number = 0.3;
+	readonly MAX_MINUTES:number = 2;
 	readonly INTERVAL_MAX_SECONDS:number = 5;
 	readonly INTERVAL_MIN_SECONDS:number = 0.5;
 	readonly BOMB_WIDTH_VH = 10;
@@ -16,18 +16,33 @@ export default class BombSpawnManager {
 	spawningStartTime:number;
 	spawningEndTime:number;
 	bombCount:number = 0;
+	allBombs:Bomb[];
 
 	constructor(gameContainer:HTMLDivElement) {
+		this.allBombs = [];
 		this.bombsContainer = document.createElement('div');
 		this.bombsContainer.classList.add('bombs-container');
 		this.spawningEndTime = Date.now() + (this.MAX_MINUTES * 60 * 1000);
 		gameContainer.appendChild(this.bombsContainer);
 		this.spawnBomb();
 
-		// droppable.on('droppable:stop', function (e:any) {
-		// 	console.log(e);
-		// });
+		let droppable = new Droppable(gameContainer, {
+			draggable: '.bomb',
+			droppable: '.bin, .bombs-container'
+		});
 
+		droppable.on('drag:stop', (e:any) => {
+			let original = e.originalSource as HTMLElement;
+			let bomb = this.findBombByHTMLNode(original);
+			// avoid the "occupied" logic the pluggin offers by removing this class
+			e.source.parentElement.classList.remove('draggable-droppable--occupied');
+			bomb.onDropped(e.source.parentElement);
+		});
+
+	}
+
+	findBombByHTMLNode(node:HTMLElement):Bomb {
+		return this.allBombs.find((bomb)=> bomb.html === node);
 	}
 
 	spawnBomb() {
@@ -36,8 +51,9 @@ export default class BombSpawnManager {
 		let bomb = new Bomb();
 		bomb.html.style.left = randomPosition.left + 'px';
 		bomb.html.style.top = randomPosition.top + 'px';
+		this.allBombs.push(bomb);
 		this.bombsContainer.appendChild(bomb.html);
-		if (Date.now() > this.spawningEndTime || this.bombCount > 1) {
+		if (Date.now() > this.spawningEndTime || this.bombCount > 120) {
 			GameManager.gameOver();
 		} else {
 			this.scheduleNextBombSpawn();
@@ -71,10 +87,6 @@ export default class BombSpawnManager {
 	}
 
 	onGameOver() {
-		let droppable:any = new Droppable(document.querySelector('#game'), {
-			draggable: '.bomb',
-			droppable: '.bin, .bombs-container'
-		});
-		console.log(droppable);
+		
 	}
 }
