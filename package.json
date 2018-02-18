@@ -2,7 +2,6 @@
   "name": "bomb-disposal-game",
   "version": "1.0.0",
   "description": "Scrapinghub coding test \"Bomb disposal game\" for web browsers",
-  "main": "gulpfile.js",
   "dependencies": {
     "@shopify/draggable": "^1.0.0-beta.4",
     "babel-core": "^6.26.0",
